@@ -7,11 +7,11 @@ const dimension = world.getDimension("overworld")
 
 const oreValues: { [key: string]: number } = {
     "minecraft:stone": 1,
-    "minecraft:coal_ore": 5,
-    "minecraft:iron_ore": 10,
-    "minecraft:gold_ore": 20,
-    "minecraft:diamond_ore": 50,
-    "minecraft:emerald_ore": 100,
+    "minecraft:coal_ore": 10,
+    "minecraft:iron_ore": 25,
+    "minecraft:gold_ore": 50,
+    "minecraft:diamond_ore": 200,
+    "minecraft:emerald_ore": 500,
     "minecraft:lapis_ore": 15,
     "minecraft:redstone_ore": 8,
     "minecraft:quartz_ore": 7,
@@ -55,7 +55,7 @@ function getOreToolRequirement(oreId: string): number {
 }
 
 
-const minBounds = { x: 4984, y: -63, z: 4986 };
+const minBounds = { x: 4984, y: -63, z: 4984 };
 const maxBounds = { x: 5016, y: 319, z: 5016 };
 
 world.beforeEvents.playerBreakBlock.subscribe(data => {
@@ -77,8 +77,7 @@ world.beforeEvents.playerBreakBlock.subscribe(data => {
             if (getPickaxeMiningPower(data.itemStack.typeId) >= breakingPower) {
 
                 system.run(() => {
-                    addMoney(player, getOreValue(block.typeId))
-                    player.playSound("random.orb")
+                    addMoney(player, getOreValue(block.typeId) * Math.floor(Math.random() * Math.pow((20 + Math.round(Math.max(1, 50 - y) / 2)), 1.1)))
                     block.setType("minecraft:air")
                 })
             } else {

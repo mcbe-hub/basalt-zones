@@ -8,11 +8,12 @@
 			"is_summonable": false
 		},
 		"component_groups": {
-			"bz:pvpon": {},
-			"bz:pvpoff": {
+			"bz:pvpon": {
 				"minecraft:attack": {
 					"damage": 1
-				},
+				}
+			},
+			"bz:pvpoff": {
 				"minecraft:damage_sensor": {
 					"triggers": {
 						"cause": "all",
@@ -136,8 +137,30 @@
 			"minecraft:block_climber": {}
 		},
 		"events": {
-			"bz:pvpoff": {},
-			"bz::pvpon": {}
+			"bz:pvpoff": {
+				"add": {
+					"component_groups": [
+						"bz:pvpoff"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"bz:pvpon"
+					]
+				}
+			},
+			"bz::pvpon": {
+				"add": {
+					"component_groups": [
+						"bz:pvpon"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"bz:pvpoff"
+					]
+				}
+			}
 		}
 	}
 }

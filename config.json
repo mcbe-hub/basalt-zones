@@ -5,11 +5,11 @@
 	"authors": [
 		"LaylaBB"
 	],
-	"targetVersion": "1.21.30",
+	"targetVersion": "1.21.40",
 	"description": "Basalt Zones",
 	"experimentalGameplay": {
 		"creationOfCustomBiomes": false,
-		"upcomingCreatorFeatures": false,
+		"upcomingCreatorFeatures": true,
 		"enableGameTestFramework": true,
 		"educationEdition": false
 	},

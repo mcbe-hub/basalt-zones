@@ -1,9 +1,9 @@
 import * as server from '@minecraft/server'
 
 export function pvpOn(player: server.Player) {
-    //todo
+    player.triggerEvent("bz:pvpon")
 }
 
 export function pvpOff(player: server.Player) {
-    //todo
+    player.triggerEvent("bz:pvpoff")
 }

@@ -1,5 +1,9 @@
 {
 	"resource_pack_name": "Basalt Zones",
 	"texture_name": "atlas.items",
-	"texture_data": {}
+	"texture_data": {
+		"bz_leap": {
+			"textures": "textures/items/leap"
+		}
+	}
 }

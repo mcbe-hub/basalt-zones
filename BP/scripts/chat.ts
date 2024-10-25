@@ -3,7 +3,7 @@ import { isAdmin, modMenu } from './adminStuff.js'
 import { getEloString } from './rankingSystem/getEloString.js'
 import { ActionFormData, ActionFormResponse, ModalFormData, ModalFormResponse } from '@minecraft/server-ui'
 import { isCombatLog } from './combatLog.js'
-import { spawnPos } from './main.js'
+import { spawnTeleport } from './main.js'
 
 const world = server.world
 const system = server.system
@@ -21,11 +21,9 @@ world.beforeEvents.chatSend.subscribe(data => {
                 })
                 break;
             case "!spawn":
-                if (!isCombatLog(player)) {
-                    system.run(() => {
-                        player.teleport(spawnPos)
-                    })
-                }
+                server.system.run(() => {
+                    spawnTeleport(player)
+                })
                 break;
 
             default: player.sendMessage("§cNie ma takiej komendy!")

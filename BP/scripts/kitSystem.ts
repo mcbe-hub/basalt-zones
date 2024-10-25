@@ -1,4 +1,6 @@
 import * as server from '@minecraft/server';
+import { fullClear } from './main.js'
+
 
 // Function to set the player's kit
 export function setKit(player: server.Player, id: string) {
@@ -6,7 +8,7 @@ export function setKit(player: server.Player, id: string) {
 
     if (kit) {
         const inv = player.getComponent("inventory").container;
-        inv.clearAll();
+        fullClear(player)
         const equipment = player.getComponent("equippable");
 
         equipment.setEquipment(server.EquipmentSlot.Head, kit.helmet);

@@ -3,3 +3,4 @@ pack.description=Basalt Zones
 tile.bz:display_text.name=empty
 item.spawn_egg.entity.bz:display_text.name=Spawn empty
 entity.bz:display_text.name=empty
+item.bz:leap=§d§lLeap

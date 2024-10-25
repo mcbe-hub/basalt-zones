@@ -16,7 +16,7 @@ export function setupGamerules() {
     gameRules.doTileDrops = true
     gameRules.doWeatherCycle = false
     gameRules.drowningDamage = true
-    gameRules.fallDamage = true
+    gameRules.fallDamage = false
     gameRules.fireDamage = true
     gameRules.freezeDamage = true
     gameRules.functionCommandLimit = 1
