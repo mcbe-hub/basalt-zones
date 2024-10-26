@@ -34,8 +34,120 @@ export function mainShopUi(player: server.Player) {
 }
 
 function enchantShop(player: server.Player) {
+    // Fetch the player's current enchantment levels
+    const sharpnessLevel = player.getDynamicProperty("sharpness") as number || 0;
+    const protectionLevel = player.getDynamicProperty("protection") as number || 0;
+    const mendingLevel = player.getDynamicProperty("mending") as number || 0;
+    const unbreakingLevel = player.getDynamicProperty("unbreaking") as number || 0;
+    const powerLevel = player.getDynamicProperty("power") as number || 0;
+    const fireAspectLevel = player.getDynamicProperty("fireAspect") as number || 0;
 
+    // Define costs for each enchantment level (adjust as needed)
+    const enchantCosts = {
+        sharpness: [100000, 500000, 1000000, 5000000, 10000000],
+        protection: [100000, 500000, 1000000, 5000000, 10000000],
+        mending: [2500000],  // Mending typically has 1 level
+        unbreaking: [200000, 1000000, 5000000],
+        power: [500000, 1000000, 5000000, 10000000],
+        fireAspect: [300000, 1500000] // Fire Aspect levels 1 and 2
+    };
+
+    const ui = new ActionFormData()
+        .title("Sklep Enchantów")
+        .body("\nWybierz enchant, który chcesz ulepszyć!\n");
+
+    // Add buttons for each enchant, if they can be upgraded
+    if (sharpnessLevel < 5) {
+        ui.button(`Sharpness ${romanize(sharpnessLevel + 1)} - §2${enchantCosts.sharpness[sharpnessLevel]}`, "textures/items/enchanted_book.png");
+    } else {
+        ui.button("§l§2Nie ma już wyższego Sharpness!");
+    }
+
+    if (protectionLevel < 5) {
+        ui.button(`Protection ${romanize(protectionLevel + 1)} - §2${enchantCosts.protection[protectionLevel]}`, "textures/items/enchanted_book.png");
+    } else {
+        ui.button("§l§2Nie ma już wyższego Protection!");
+    }
+
+    if (mendingLevel < 1) {
+        ui.button(`Mending - §2${enchantCosts.mending[0]}`, "textures/items/enchanted_book.png");
+    } else {
+        ui.button("Masz już Mending!");
+    }
+
+    if (unbreakingLevel < 3) {
+        ui.button(`Unbreaking ${romanize(unbreakingLevel + 1)} - §2${enchantCosts.unbreaking[unbreakingLevel]}`, "textures/items/enchanted_book.png");
+    } else {
+        ui.button("§l§2Nie ma już wyższego Unbreaking!");
+    }
+
+    if (powerLevel < 5) {
+        ui.button(`Power ${romanize(powerLevel + 1)} - §2${enchantCosts.power[powerLevel]}`, "textures/items/enchanted_book.png");
+    } else {
+        ui.button("§l§2Nie ma już wyższego Power!");
+    }
+
+    if (fireAspectLevel < 2) {
+        ui.button(`Fire Aspect ${romanize(fireAspectLevel + 1)} - §2${enchantCosts.fireAspect[fireAspectLevel]}`, "textures/items/enchanted_book.png");
+    } else {
+        ui.button("§l§2Masz już maksymalny poziom Fire Aspect!");
+    }
+
+    // Show the UI and handle selections
+    ui.show(player).then(data => {
+        if (!data.canceled) {
+            const selection = data.selection;
+            let cost = 0;
+            let enchantProperty = "";
+            let currentLevel = 0;
+
+            switch (selection) {
+                case 0: // Sharpness
+                    cost = enchantCosts.sharpness[sharpnessLevel];
+                    enchantProperty = "sharpness";
+                    currentLevel = sharpnessLevel;
+                    break;
+                case 1: // Protection
+                    cost = enchantCosts.protection[protectionLevel];
+                    enchantProperty = "protection";
+                    currentLevel = protectionLevel;
+                    break;
+                case 2: // Mending
+                    cost = enchantCosts.mending[0];
+                    enchantProperty = "mending";
+                    currentLevel = mendingLevel;
+                    break;
+                case 3: // Unbreaking
+                    cost = enchantCosts.unbreaking[unbreakingLevel];
+                    enchantProperty = "unbreaking";
+                    currentLevel = unbreakingLevel;
+                    break;
+                case 4: // Power
+                    cost = enchantCosts.power[powerLevel];
+                    enchantProperty = "power";
+                    currentLevel = powerLevel;
+                    break;
+                case 5: // Fire Aspect
+                    cost = enchantCosts.fireAspect[fireAspectLevel];
+                    enchantProperty = "fireAspect";
+                    currentLevel = fireAspectLevel;
+                    break;
+            }
+
+            // Check if player has enough money and process the upgrade
+            if (hasEnoughMoney(player, cost)) {
+                payMoney(player, cost);
+                addToDynamicProperty(player, enchantProperty, 1);
+                player.sendMessage(`§aUlepszono ${enchantProperty} na poziom ${romanize(currentLevel + 1)}!`);
+                player.playSound("random.orb");
+            } else {
+                player.sendMessage("§4Nie masz wystarczająco pieniędzy na ten enchant!");
+            }
+        }
+    });
 }
+
+
 
 function miningShop(player: server.Player) {
     const pickaxeLevel = player.getDynamicProperty("pickaxe") as number

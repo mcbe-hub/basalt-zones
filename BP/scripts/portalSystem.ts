@@ -39,6 +39,12 @@ const ironArena: IArena = {
     id: "ironArena",
     kitId: "ironKit",
 }
+const netheriteArena: IArena = {
+    start: { x: 3925, y: 3925 },
+    end: { x: 4075, y: 4075 },
+    id: "netheriteArena",
+    kitId: "netheriteKit",
+}
 
 
 interface IRegion {
@@ -72,6 +78,12 @@ const regions: IRegion[] = [
         id: "mineArea",
         onEnter: handleMineArea,
         enablePvp: false
+    },
+    {
+        blockVolume: new server.BlockVolume({ x: -13, y: 80, z: -9 }, { x: -19, y: 92, z: -6 }),
+        id: "netheriteArena",
+        onEnter: handleNetheriteArena,
+        enablePvp: true
     }
 ];
 
@@ -81,6 +93,10 @@ function handleChainArena(player: server.Player) {
 
 function handleIronArena(player: server.Player) {
     teleportToArena(player, ironArena)
+}
+
+function handleNetheriteArena(player: server.Player) {
+    teleportToArena(player, netheriteArena)
 }
 
 function handleShopArea(player: server.Player) {

@@ -10,4 +10,10 @@ export function joinSetup(player: Player) {
     if (player.getDynamicProperty("haste") == undefined) player.setDynamicProperty("haste", 0)
     if (player.getDynamicProperty("pickaxe") == undefined) player.setDynamicProperty("pickaxe", 0)
     if (player.getDynamicProperty("efficiency") == undefined) player.setDynamicProperty("efficiency", 0)
+    if (player.getDynamicProperty("sharpness") == undefined) player.setDynamicProperty("sharpness", 0)
+    if (player.getDynamicProperty("protection") == undefined) player.setDynamicProperty("protection", 0)
+    if (player.getDynamicProperty("mending") == undefined) player.setDynamicProperty("mending", 0)
+    if (player.getDynamicProperty("unbreaking") == undefined) player.setDynamicProperty("unbreaking", 0)
+    if (player.getDynamicProperty("power") == undefined) player.setDynamicProperty("power", 0)
+    if (player.getDynamicProperty("fireAspect") == undefined) player.setDynamicProperty("fireAspect", 0)
 }

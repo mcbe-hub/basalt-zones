@@ -31,12 +31,16 @@ world.afterEvents.playerSpawn.subscribe(data => {
 
 system.runInterval(() => {
     for (const player of world.getAllPlayers()) {
+
+
         player.nameTag = `${getEloString(player.getDynamicProperty("elo") as number)} ${player.name}`
         try {
+            const combatLog = player.getDynamicProperty("combatLog") as number
+            player.setDynamicProperty("combatLog", combatLog + 1)
             if (!isCombatLog(player)) {
                 player.onScreenDisplay.setActionBar(`§aKasa: §2${player.getDynamicProperty("money")}§a$`)
             } else {
-
+                player.onScreenDisplay.setActionBar(`${((600 - combatLog) / 20).toFixed(1)}`)
             }
             if (player.dimension.getBlock(player.location)?.typeId === "minecraft:water") {
                 checkPlayerLocation(player)

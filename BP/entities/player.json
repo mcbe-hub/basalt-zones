@@ -149,7 +149,7 @@
 					]
 				}
 			},
-			"bz::pvpon": {
+			"bz:pvpon": {
 				"add": {
 					"component_groups": [
 						"bz:pvpon"
