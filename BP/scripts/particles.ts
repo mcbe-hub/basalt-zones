@@ -31,5 +31,15 @@ const particles: IParticle[] = [
         id: "bz:boxpvp",
         timeout: 10,
         position: { x: -16.5, y: 105, z: -7.5 }
+    },
+    {
+        id: "bz:miasto",
+        timeout: 10,
+        position: { x: -39.5, y: 90, z: -16.5 }
+    },
+    {
+        id: "bz:budowa",
+        timeout: 10,
+        position: { x: 6.5, y: 90, z: -16.5 }
     }
 ]

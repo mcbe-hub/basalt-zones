@@ -6,7 +6,7 @@ export function joinSetup(player: Player) {
     if (player.getDynamicProperty("totalMoney") == undefined) player.setDynamicProperty("totalMoney", 0)
     if (player.getDynamicProperty("kills") == undefined) player.setDynamicProperty("kills", 0)
     if (player.getDynamicProperty("deaths") == undefined) player.setDynamicProperty("deaths", 0)
-    if (player.getDynamicProperty("combatLog") == undefined) player.setDynamicProperty("combatLog", 0)
+    if (player.getDynamicProperty("combatLog") == undefined) player.setDynamicProperty("combatLog", 600)
     if (player.getDynamicProperty("haste") == undefined) player.setDynamicProperty("haste", 0)
     if (player.getDynamicProperty("pickaxe") == undefined) player.setDynamicProperty("pickaxe", 0)
     if (player.getDynamicProperty("efficiency") == undefined) player.setDynamicProperty("efficiency", 0)
@@ -16,4 +16,5 @@ export function joinSetup(player: Player) {
     if (player.getDynamicProperty("unbreaking") == undefined) player.setDynamicProperty("unbreaking", 0)
     if (player.getDynamicProperty("power") == undefined) player.setDynamicProperty("power", 0)
     if (player.getDynamicProperty("fireAspect") == undefined) player.setDynamicProperty("fireAspect", 0)
+    player.setDynamicProperty("pvp", false)
 }

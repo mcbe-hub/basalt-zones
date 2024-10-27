@@ -1,4 +1,5 @@
-import { Player } from '@minecraft/server'
+import { Player, world } from '@minecraft/server'
+import { getEloString } from './getEloString.js'
 
 export function postKillElo(winner: Player, loser: Player) {
     const winnerElo = winner.getDynamicProperty("elo") as number ?? 1000;
@@ -17,4 +18,5 @@ export function postKillElo(winner: Player, loser: Player) {
     // Set new Elo ratings
     winner.setDynamicProperty("elo", winnerNewElo);
     loser.setDynamicProperty("elo", loserNewElo);
+
 }

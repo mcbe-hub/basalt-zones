@@ -9,12 +9,13 @@
 			"is_experimental": true
 		},
 		"components": {
-			"minecraft:icon": "bz_leap",
+			"minecraft:icon": "feather",
 			"minecraft:glint": true,
 			"minecraft:cooldown": {
 				"category": "leap",
 				"duration": 15
-			}
+			},
+			"minecraft:max_stack_size": 1
 		}
 	}
 }

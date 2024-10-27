@@ -1,5 +1,5 @@
 import * as server from '@minecraft/server'
-import { spawnPos } from '../main.js'
+import { spawnPos, formatMoney } from '../main.js'
 
 const system = server.system
 const world = server.world
@@ -69,8 +69,9 @@ function handleRanking(ranking: IRanking, players: server.Player[]) {
         else if (i === 1) color = "§i";
         else if (i === 2) color = "§n";
 
-
-        str += `\n${color}§l${i + 1}.§r ${player.name} - §e${player.value}§r\n`;
+        let stringDisplay = player.value.toString()
+        if (player.value > 50000) stringDisplay = formatMoney(player.value)
+        str += `\n${color}§l${i + 1}.§r ${player.name} - §e${stringDisplay}§r\n`;
     }
 
 

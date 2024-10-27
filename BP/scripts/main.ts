@@ -7,6 +7,7 @@ import 'chat.js'
 import 'pressurePlates.js'
 import './rankingSystem/rankingDisplays.js'
 import 'mine.js'
+import 'itemUse.js'
 import { isCombatLog } from './combatLog.js'
 import { setupParticles } from './particles.js'
 import { setupGamerules } from './setupGamerules.js'
@@ -23,9 +24,12 @@ world.afterEvents.worldInitialize.subscribe(() => {
 
 world.afterEvents.playerSpawn.subscribe(data => {
     const player = data.player
+    pvpOff(player)
+    player.setDynamicProperty("combatLog", 600)
     if (data.initialSpawn) {
         joinSetup(player)
         pvpOff(player)
+        player.teleport(spawnPos)
     }
 })
 
@@ -38,9 +42,9 @@ system.runInterval(() => {
             const combatLog = player.getDynamicProperty("combatLog") as number
             player.setDynamicProperty("combatLog", combatLog + 1)
             if (!isCombatLog(player)) {
-                player.onScreenDisplay.setActionBar(`§aKasa: §2${player.getDynamicProperty("money")}§a$`)
+                player.onScreenDisplay.setActionBar(`§aKasa: §2${formatMoney(player.getDynamicProperty("money") as number)}§a$`);
             } else {
-                player.onScreenDisplay.setActionBar(`${((600 - combatLog) / 20).toFixed(1)}`)
+                player.onScreenDisplay.setActionBar(`§4Combat Log: §c§l${((600 - combatLog) / 20).toFixed(1)}§r§cs`)
             }
             if (player.dimension.getBlock(player.location)?.typeId === "minecraft:water") {
                 checkPlayerLocation(player)
@@ -91,3 +95,16 @@ export function fullClear(player: server.Player) {
     equippable.setEquipment(server.EquipmentSlot.Mainhand)
     equippable.setEquipment(server.EquipmentSlot.Offhand)
 }
+
+export function formatMoney(money: number): string {
+    if (money >= 1_000_000_000) {
+        return (money / 1_000_000_000).toFixed(2) + "b"; // Billions
+    } else if (money >= 1_000_000) {
+        return (money / 1_000_000).toFixed(2) + "m"; // Millions
+    } else if (money >= 1_000) {
+        return (money / 1_000).toFixed(2) + "k"; // Thousands
+    } else {
+        return money.toString(); // Less than 1,000
+    }
+}
+

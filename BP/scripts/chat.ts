@@ -36,7 +36,12 @@ world.beforeEvents.chatSend.subscribe(data => {
 
         if (muteDate == undefined || muteDate < new Date().getTime()) {
             if ((lastMsg == undefined || now - (lastMsg + 5000) > 0) || isAdmin(player)) {
-                world.sendMessage(`${getEloString(player.getDynamicProperty("elo") as number)} ${player.name}§7: ${msg}`)
+                let message = ""
+                if (isAdmin(player)) {
+                    message += "§c§lADMIN§r "
+                }
+                message += `${getEloString(player.getDynamicProperty("elo") as number)} ${player.name}§7: ${msg}`
+                world.sendMessage(message)
                 player.setDynamicProperty("lastMsg", now)
             } else {
                 player.sendMessage(`§cMożesz wysyłać wiadomości jedynie co 5 sekund!`)

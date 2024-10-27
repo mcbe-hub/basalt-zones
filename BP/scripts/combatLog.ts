@@ -7,3 +7,7 @@ export function isCombatLog(player: server.Player) {
     }
     return false
 }
+
+export function addCombatLog(player: server.Player) {
+    player.setDynamicProperty("combatLog", 0)
+}
