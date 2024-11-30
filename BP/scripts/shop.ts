@@ -1,5 +1,5 @@
 import * as server from '@minecraft/server'
-import { ActionFormData, ModalFormResponse } from '@minecraft/server-ui'
+import { ActionFormData, ModalFormResponse, MessageFormData } from '@minecraft/server-ui'
 import { addMoney, payMoney, addToDynamicProperty } from './main.js'
 
 function hasEnoughMoney(player: server.Player, amount: number) {
@@ -23,7 +23,7 @@ export function mainShopUi(player: server.Player) {
                         enchantShop(player)
                         break;
                     case 1:
-
+                        specialItemShop(player)
                         break;
                     case 2:
                         miningShop(player)
@@ -31,6 +31,66 @@ export function mainShopUi(player: server.Player) {
                 }
             }
         })
+}
+
+interface ISpecialItem {
+    name: string
+    price: number
+    icon: string
+    description: string
+    requirementAmount: number
+    requirementProperty: string
+    property: string
+}
+
+const specialItems: ISpecialItem[] = [
+    {
+        name: "Leap",
+        price: 500000,
+        icon: "textures/items/feather.png",
+        description: "TEST",
+        requirementProperty: "elo",
+        requirementAmount: 1250,
+        property: "blink"
+    },
+    {
+        name: "Blink",
+        price: 1000000,
+        icon: "textures/items/ender_eye.png",
+        description: "TEST",
+        requirementProperty: "kills",
+        requirementAmount: 50,
+        property: "blink"
+    },
+    {
+        name: "Shooter",
+        price: 2500000,
+        icon: "textures/items/crossbow_pulling_0.png",
+        description: "TEST",
+        requirementProperty: "kills",
+        requirementAmount: 50,
+        property: "blink"
+    },
+]
+
+function specialItemShop(player: server.Player) {
+    const ui = new ActionFormData()
+        .title("Specjalne Itemy")
+    for (const item of specialItems) {
+        ui.button(`§d§l${item.name}§r`, item.icon)
+    }
+    ui.show(player).then(data => {
+        if (!data.canceled) {
+            const selection = specialItems[data.selection]
+            if (selection) {
+                if (!player.getDynamicProperty(selection.property)) {
+
+                } else {
+
+                }
+            } else { player.sendMessage("§l§cERROR!") }
+        }
+    })
 }
 
 function enchantShop(player: server.Player) {

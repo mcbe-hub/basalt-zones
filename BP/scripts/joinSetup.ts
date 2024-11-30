@@ -16,5 +16,9 @@ export function joinSetup(player: Player) {
     if (player.getDynamicProperty("unbreaking") == undefined) player.setDynamicProperty("unbreaking", 0)
     if (player.getDynamicProperty("power") == undefined) player.setDynamicProperty("power", 0)
     if (player.getDynamicProperty("fireAspect") == undefined) player.setDynamicProperty("fireAspect", 0)
+    if (player.getDynamicProperty("blink") == undefined) player.setDynamicProperty("blink", false)
+    if (player.getDynamicProperty("shooter") == undefined) player.setDynamicProperty("shooter", false)
+    if (player.getDynamicProperty("leap") == undefined) player.setDynamicProperty("leap", false)
+
     player.setDynamicProperty("pvp", false)
 }

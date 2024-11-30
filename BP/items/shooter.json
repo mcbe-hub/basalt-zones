@@ -1,0 +1,18 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:item": {
+        "description": {
+            "identifier": "bz:shooter",
+            "menu_category": {
+                "category": "nature"
+            },
+            "is_experimental": true
+        },
+        "components": {
+            "minecraft:icon": "crossbow_pulling",
+            "minecraft:glint": true,
+            "minecraft:max_stack_size": 1,
+            "minecraft:hand_equipped": true
+        }
+    }
+}

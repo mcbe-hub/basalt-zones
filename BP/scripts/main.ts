@@ -12,6 +12,8 @@ import { isCombatLog } from './combatLog.js'
 import { setupParticles } from './particles.js'
 import { setupGamerules } from './setupGamerules.js'
 import 'combat.js'
+import { dailyLogin } from './dailySystem.js'
+
 
 const world = server.world
 const system = server.system
@@ -21,6 +23,8 @@ world.afterEvents.worldInitialize.subscribe(() => {
     setupParticles()
     setupGamerules()
 })
+
+dailyLogin(world.getAllPlayers()[0])
 
 world.afterEvents.playerSpawn.subscribe(data => {
     const player = data.player

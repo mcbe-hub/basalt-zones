@@ -4,3 +4,6 @@ tile.bz:display_text.name=empty
 item.spawn_egg.entity.bz:display_text.name=Spawn empty
 entity.bz:display_text.name=empty
 item.bz:leap=§d§lLeap
+item.bz:blink=§d§lBlink
+item.bz:shooter=§d§lShooter
+
