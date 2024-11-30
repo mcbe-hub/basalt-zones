@@ -13,7 +13,7 @@ export function setupGamerules() {
     gameRules.doLimitedCrafting = false
     gameRules.doMobLoot = true
     gameRules.doMobSpawning = false
-    gameRules.doTileDrops = true
+    gameRules.doTileDrops = false
     gameRules.doWeatherCycle = false
     gameRules.drowningDamage = true
     gameRules.fallDamage = false
