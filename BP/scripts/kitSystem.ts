@@ -82,12 +82,20 @@ export function setKit(player: server.Player, id: string, clearOffHand = true) {
         inv.setItem(slot, new server.ItemStack("minecraft:arrow", arrowAmount))
 
 
+        for (const item of ["leap", "blink", "shooter"]) {
+            if (player.getDynamicProperty(item)) {
+                inv.addItem(new server.ItemStack("bz:" + item))
+            }
+        }
+
         kit.items.forEach(item => {
             inv.addItem(item);
         });
 
     }
 }
+
+
 
 // Interface for the kits
 interface IKit {

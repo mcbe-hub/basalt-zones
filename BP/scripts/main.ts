@@ -13,11 +13,18 @@ import { setupParticles } from './particles.js'
 import { setupGamerules } from './setupGamerules.js'
 import 'combat.js'
 import { dailyLogin } from './dailySystem.js'
+import { spawnBat } from './batHunting.js'
 
 
 const world = server.world
 const system = server.system
 export const spawnPos = { x: -17, y: 82, z: -40 }
+
+
+
+server.system.runTimeout(() => {
+    spawnBat()
+}, 1200)
 
 world.afterEvents.worldInitialize.subscribe(() => {
     setupParticles()
@@ -61,7 +68,7 @@ export function addMoney(player: server.Player, amount: number) {
     const currentMoneyAmount = player.getDynamicProperty("money") as number
     player.setDynamicProperty("money", currentMoneyAmount + amount)
     const currentTotalMoney = player.getDynamicProperty("totalMoney") as number
-    player.setDynamicProperty("totalMoney", currentMoneyAmount + amount)
+    player.setDynamicProperty("totalMoney", currentTotalMoney + amount)
 }
 
 export function payMoney(player: server.Player, amount: number) {

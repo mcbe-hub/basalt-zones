@@ -42,36 +42,37 @@ interface ISpecialItem {
     requirementProperty: string
     property: string
 }
-
 const specialItems: ISpecialItem[] = [
     {
-        name: "Leap",
+        name: "§eLeap",
         price: 500000,
         icon: "textures/items/feather.png",
-        description: "TEST",
+        description: "§7Pozwala na szybki skok do przodu na dystans.\n§7Cena: §e500,000 monet.\n§7Odblokuj za: §e1250 elo.",
         requirementProperty: "elo",
         requirementAmount: 1250,
-        property: "blink"
+        property: "leap"
     },
     {
-        name: "Blink",
+        name: "§dBlink",
         price: 1000000,
         icon: "textures/items/ender_eye.png",
-        description: "TEST",
-        requirementProperty: "kills",
-        requirementAmount: 50,
+        description: "§7Teleportuje cię za przeciwnika.\n§7Czas odnowienia: §e15 sekund.\n§7Cena: §e1,000,000 monet.\n§7Odblokuj za łącznie zarobione: §e5,000,000 monet.",
+        requirementProperty: "totalMoney",
+        requirementAmount: 5000000,
         property: "blink"
     },
     {
-        name: "Shooter",
+        name: "§cShooter",
         price: 2500000,
         icon: "textures/items/crossbow_pulling_0.png",
-        description: "TEST",
+        description: "§7Strzela laserem zadającym §e2 serca §7obrażeń ignorujących zbroję.\n§7Cena: §e2,500,000 monet.\n§7Odblokuj za: §e50 zabójstw.",
         requirementProperty: "kills",
         requirementAmount: 50,
-        property: "blink"
+        property: "shooter"
     },
-]
+];
+
+
 
 function specialItemShop(player: server.Player) {
     const ui = new ActionFormData()
@@ -83,10 +84,30 @@ function specialItemShop(player: server.Player) {
         if (!data.canceled) {
             const selection = specialItems[data.selection]
             if (selection) {
+                console.warn(player.getDynamicProperty(selection.property))
                 if (!player.getDynamicProperty(selection.property)) {
+                    new MessageFormData().title(selection.name)
+                        .body(selection.description)
+                        .button2("Kup")
+                        .button1("Anuluj")
+                        .show(player).then(data => {
+                            if (!data.canceled) {
+                                if (data.selection == 1) {
 
+                                    if (player.getDynamicProperty(selection.requirementProperty) >= selection.requirementAmount) {
+                                        if (hasEnoughMoney(player, selection.price)) {
+                                            player.setDynamicProperty(selection.property, true)
+                                            payMoney(player, selection.price)
+                                            player.sendMessage("§aPomyślnie zakupiono:§r §d§l" + selection.name)
+                                        }
+                                    } else { player.sendMessage("§cNie spełniasz wymagań aby to kupić!") }
+                                } else {
+                                    player.sendMessage("§cAnulowano!")
+                                }
+                            }
+                        })
                 } else {
-
+                    player.sendMessage("§cMasz już ten przedmiot!")
                 }
             } else { player.sendMessage("§l§cERROR!") }
         }

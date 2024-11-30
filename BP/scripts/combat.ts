@@ -30,6 +30,12 @@ world.afterEvents.entityDie.subscribe(data => {
             splitMoney(killer, dead)
             setKit(killer, killer.getDynamicProperty("kit") as string, false)
         }
+    } else if (dead.typeId == "minecraft:bat") {
+        const player = data.damageSource.damagingEntity
+        const randomMoney = Math.floor(Math.random() * 50000) + 15000
+        if (player instanceof server.Player) {
+            world.sendMessage(`${player.nameTag} zabija nietoperza! Zyskuje: §a${randomMoney}§r$ kasy!`)
+        }
     }
 })
 

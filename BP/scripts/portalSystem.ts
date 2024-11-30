@@ -30,7 +30,7 @@ function teleportToArena(player: server.Player, arena: IArena) {
 
 }
 
-interface IArena {
+export interface IArena {
     start: server.Vector2;
     end: server.Vector2;
     id: string;
@@ -39,21 +39,21 @@ interface IArena {
 }
 
 
-const chainMailArena: IArena = {
+export const chainMailArena: IArena = {
     start: { x: 2085, y: 2008 },
     end: { x: 2045, y: 2095 },
     id: "chainArena",
     kitId: "chainmailKit",
     totalMoney: 500
 }
-const ironArena: IArena = {
+export const ironArena: IArena = {
     start: { x: 3097, y: 3014 },
     end: { x: 3034, y: 3085 },
     id: "ironArena",
     kitId: "ironKit",
     totalMoney: 100000
 }
-const netheriteArena: IArena = {
+export const netheriteArena: IArena = {
     start: { x: 3925, y: 3925 },
     end: { x: 4075, y: 4075 },
     id: "netheriteArena",
