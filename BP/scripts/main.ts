@@ -12,7 +12,7 @@ import { isCombatLog } from './combatLog.js'
 import { setupParticles } from './particles.js'
 import { setupGamerules } from './setupGamerules.js'
 import 'combat.js'
-import { dailyLogin } from './dailySystem.js'
+import { dailyLogin, getLoginInfo, giveReward } from './dailySystem.js'
 import { spawnBat } from './batHunting.js'
 
 
@@ -24,20 +24,20 @@ export const spawnPos = { x: -17, y: 82, z: -40 }
 
 server.system.runTimeout(() => {
     spawnBat()
-}, 1200)
+}, 1500)
 
 world.afterEvents.worldInitialize.subscribe(() => {
     setupParticles()
     setupGamerules()
 })
 
-dailyLogin(world.getAllPlayers()[0])
 
 world.afterEvents.playerSpawn.subscribe(data => {
     const player = data.player
     pvpOff(player)
     player.setDynamicProperty("combatLog", 600)
     if (data.initialSpawn) {
+        dailyLogin(player)
         joinSetup(player)
         pvpOff(player)
         player.teleport(spawnPos)
@@ -45,8 +45,8 @@ world.afterEvents.playerSpawn.subscribe(data => {
 })
 
 system.runInterval(() => {
-    for (const player of world.getAllPlayers()) {
-
+    const players = world.getAllPlayers()
+    for (const player of players) {
 
         player.nameTag = `${getEloString(player.getDynamicProperty("elo") as number)} ${player.name}`
         try {
@@ -60,7 +60,19 @@ system.runInterval(() => {
             if (player.dimension.getBlock(player.location)?.typeId === "minecraft:water") {
                 checkPlayerLocation(player)
             }
+            player.setDynamicProperty("dayPlaytime", player.getDynamicProperty("dayPlaytime") as number + 1)
+            player.setDynamicProperty("playtime", player.getDynamicProperty("playtime") as number + 1)
         } catch { }
+
+    }
+    if (server.system.currentTick % 50 == 0) {
+        for (const player of players) {
+            const loginInfo = getLoginInfo(player)
+            if (!loginInfo.dailyClaimed && loginInfo.dayPlaytime > 72000) {
+
+                giveReward(player)
+            }
+        }
     }
 })
 

@@ -1,6 +1,7 @@
 import * as server from '@minecraft/server'
 import { ActionFormData, ModalFormData, ActionFormResponse } from '@minecraft/server-ui'
 import { forceShow } from './chat.js'
+import { joinSetup } from './joinSetup.js'
 
 export function isAdmin(player: server.Player): boolean {
     return player.hasTag("admin")
@@ -28,7 +29,7 @@ export async function modMenu(mod: server.Player) {
 }
 
 export function playersModMenu(mod: server.Player, player: server.Player) {
-    new ActionFormData().title(player.name).button("Mute").button("Kick").button("Dynamic Property").show(mod).then(data => {
+    new ActionFormData().title(player.name).button("Mute").button("Kick").button("Dynamic Property").button("Reset").show(mod).then(data => {
         switch (data.selection) {
             case 0:
                 new ModalFormData()
@@ -88,6 +89,12 @@ export function playersModMenu(mod: server.Player, player: server.Player) {
                             });
                     }
                 });
+                break;
+            case 3:
+                for (const property of player.getDynamicPropertyIds()) {
+                    player.setDynamicProperty(property, undefined)
+                }
+                joinSetup(player)
                 break;
         }
     });
