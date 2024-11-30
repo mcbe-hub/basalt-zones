@@ -71,21 +71,16 @@ world.beforeEvents.playerBreakBlock.subscribe(data => {
         y >= minBounds.y && y <= maxBounds.y &&
         z >= minBounds.z && z <= maxBounds.z
     ) {
-        data.cancel = true
         try {
-            const breakingPower = getOreToolRequirement(block.typeId)
-            if (getPickaxeMiningPower(data.itemStack.typeId) >= breakingPower) {
-
-                system.run(() => {
-                    addMoney(player, getOreValue(block.typeId) * Math.floor(Math.random() * Math.pow((20 + Math.round(Math.max(1, 50 - y) / 2)), 1.1)))
-                    block.setType("minecraft:air")
-                })
-            } else {
+            if (getPickaxeMiningPower(data.itemStack?.typeId ?? "") < getOreToolRequirement(block.typeId)) {
+                data.cancel = true;
                 player.sendMessage("§c§lPotrzebujesz lepszego kilofa!§r\n§7Lepszy kilof możesz nabyć w sklepie!")
-            }
-        } catch { }
-    }
+                return;
+            };
 
+            addMoney(player, getOreValue(block.typeId) * Math.floor(Math.random() * Math.pow((20 + Math.round(Math.max(1, 50 - y) / 2)), 1.1)))
+        } catch {};
+    }
 });
 
 system.runInterval(() => {
