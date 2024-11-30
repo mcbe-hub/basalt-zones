@@ -2,7 +2,7 @@ import * as server from '@minecraft/server'
 import { ActionFormData, ModalFormData, ActionFormResponse } from '@minecraft/server-ui'
 import { forceShow } from './chat.js'
 
-export function isAdmin(player: server.Player) {
+export function isAdmin(player: server.Player): boolean {
     return player.hasTag("admin")
 }
 
@@ -95,7 +95,7 @@ export function playersModMenu(mod: server.Player, player: server.Player) {
 
 
 function getDateInTheFuture(unit: number, time: number): number {
-    let currentDate = new Date().getTime()
+    let currentDate = Date.now()
     switch (unit) {
         case 0:
             currentDate += time * 1000

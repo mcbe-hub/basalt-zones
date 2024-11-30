@@ -1,6 +1,6 @@
 import * as server from '@minecraft/server'
 import { ActionFormData, ModalFormResponse, MessageFormData } from '@minecraft/server-ui'
-import { addMoney, payMoney, addToDynamicProperty } from './main.js'
+import { payMoney, addToDynamicProperty } from './main.js'
 
 function hasEnoughMoney(player: server.Player, amount: number) {
     const money = player.getDynamicProperty("money") as number

@@ -5,7 +5,7 @@ import { getEloString } from './rankingSystem/getEloString.js'
 import { addMoney, payMoney } from './main.js'
 import { setKit } from './kitSystem.js'
 
-const world = server.world
+const { world } = server;
 
 world.afterEvents.entityHitEntity.subscribe(data => {
     const hitEntity = data.hitEntity
@@ -74,7 +74,5 @@ function splitMoney(winner: server.Player, loser: server.Player) {
     winner.sendMessage(msg)
     try {
         loser.sendMessage(msg)
-    } catch {
-
-    }
+    } catch {}
 }

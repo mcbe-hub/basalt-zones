@@ -1,8 +1,7 @@
 import * as server from '@minecraft/server'
 import { addMoney } from './main.js'
 
-const world = server.world
-const system = server.system
+const { world, system } = server;
 const dimension = world.getDimension("overworld")
 
 const oreValues: { [key: string]: number } = {

@@ -2,11 +2,9 @@ import * as server from '@minecraft/server'
 import { isAdmin, modMenu } from './adminStuff.js'
 import { getEloString } from './rankingSystem/getEloString.js'
 import { ActionFormData, ActionFormResponse, ModalFormData, ModalFormResponse } from '@minecraft/server-ui'
-import { isCombatLog } from './combatLog.js'
 import { spawnTeleport } from './main.js'
 
-const world = server.world
-const system = server.system
+const { world, system } = server;
 
 world.beforeEvents.chatSend.subscribe(data => {
     data.cancel = true
@@ -34,7 +32,7 @@ world.beforeEvents.chatSend.subscribe(data => {
         const now = new Date().getTime()
 
 
-        if (muteDate == undefined || muteDate < new Date().getTime()) {
+        if ((muteDate ?? 0) < Date.now()) {
             if ((lastMsg == undefined || now - (lastMsg + 5000) > 0) || isAdmin(player)) {
                 let message = ""
                 if (isAdmin(player)) {
@@ -56,6 +54,7 @@ function permCheck(player: server.Player) {
     if (isAdmin(player)) {
         return true
     }
+    
     player.sendMessage("§cNie masz pozwolenia by używać tej komendy!")
 }
 

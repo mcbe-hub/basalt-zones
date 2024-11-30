@@ -1,6 +1,6 @@
 import * as server from '@minecraft/server'
 
-const world = server.world
+const { world } = server;
 
 world.afterEvents.itemUse.subscribe(data => {
     if (data.source instanceof server.Player) {

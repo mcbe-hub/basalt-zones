@@ -1,6 +1,5 @@
-import { world } from '@minecraft/server'
-
-const gameRules = world.gameRules
+import { world } from "@minecraft/server";
+const { gameRules } = world;
 
 export function setupGamerules() {
     gameRules.commandBlockOutput = false
